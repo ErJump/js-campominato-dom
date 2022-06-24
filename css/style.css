@@ -81,5 +81,7 @@ main{
     color: #115566;
 }
 
-
+.bomb{
+    background-color: red!important;
+}
 

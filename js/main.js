@@ -53,14 +53,14 @@ function getRandomNumber (min , max){
 
 //creo l'evento per il quale si genera la griglia
 startButton.addEventListener('click', function(){
-    const difficultyValue = difficulty.value
-    //inizializzo il numero di bombe
-    const newBombsNumber = 16;
-
-    console.log(getNewRandomBombsArray(newBombsNumber, 1, difficultyValue));
-
     //aggiungo un reset per non generare box infiniti
     gridParent.innerHTML = '';
+    const difficultyValue = difficulty.value
+    const newBombsNumber = 16;
+
+    let bombsArray = getNewRandomBombsArray(newBombsNumber, 1, difficultyValue);
+    console.log(bombsArray);
+    
     //ciclo for per popolare la griglia con i nuovi box
     //il valore limite è dato dal value di select, impostato sul numero di caselle in base alla difficoltà
     for (let i = 1; i < difficultyValue; i++){
@@ -73,6 +73,10 @@ startButton.addEventListener('click', function(){
             newDiv.classList.add('active');
             newDiv.classList.remove('pointer');
             console.log(`La casella clickata è la numero: ${i}`);
+            //condizione di sconfitta
+            if (bombsArray.includes(i)){
+                newDiv.classList.add('bomb');
+            }
         })
     }
 })
