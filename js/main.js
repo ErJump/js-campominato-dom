@@ -58,6 +58,14 @@ function getRandomNumber (min , max){
     return randomNumber;
 }
 
+//controlla se il valore appartiene all'array delle bombe
+function isBomb(i , bombsArray) {
+    if (bombsArray.includes(i)) {
+        return true;
+    }
+    return false;
+}
+
 //creo l'evento per il quale si genera la griglia
 startButton.addEventListener('click', function(){
     //aggiungo i reset
@@ -93,14 +101,14 @@ startButton.addEventListener('click', function(){
             console.log(`La casella clickata è la numero: ${i}`);
 
             //condizione di sconfitta
-            if (bombsArray.includes(i)){
+            if (isBomb(i, bombsArray)){
                 newDiv.classList.add('bomb');
                 setTimeout(function(){ 
                     defeatElement.classList.remove('hidden');
                     gridParent.innerHTML = '';
-                    defeatCounter.innerHTML = clickCounterValue; 
+                    defeatCounter.innerHTML = clickCounterValue - 1; 
                     clickCounter.innerHTML = '';
-                }, 1000); 
+                }, 500); 
                 defeatCounter.innerHTML = clickCounterValue; 
             }
 
