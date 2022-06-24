@@ -109,7 +109,6 @@ startButton.addEventListener('click', function(){
                     defeatCounter.innerHTML = clickCounterValue - 1; 
                     clickCounter.innerHTML = '';
                 }, 500); 
-                defeatCounter.innerHTML = clickCounterValue; 
             }
 
             //condizione di vittoria
