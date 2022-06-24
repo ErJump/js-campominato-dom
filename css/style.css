@@ -92,3 +92,40 @@ main>p{
     color: white;
 }
 
+#victory-element{
+    background-color: #559999;
+}
+
+#victory-element>* , #defeat-element>*{
+    width: 100%;
+    text-align: center;
+}
+
+#victory-element>h1 , #defeat-element>h1{
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.hidden{
+    display: none!important;
+}
+
+#defeat-element{
+    background-color: tomato;
+    color: white;
+}
+
+#victory-element, #defeat-element{
+    position: fixed;
+    width: 50vw;
+    height: 50vh;
+    top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+    border-radius:50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
