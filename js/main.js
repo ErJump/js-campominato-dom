@@ -8,32 +8,6 @@ const defeatElement = document.getElementById('defeat-element');
 const victoryCounter = document.getElementById('victory-counter');
 const defeatCounter = document.getElementById('defeat-counter');
 
-function coreMechanic(){
-    clickCounterValue += 1;
-    clickCounter.innerHTML = clickCounterValue;
-    newDiv.classList.add('active');
-    newDiv.classList.remove('pointer');
-    console.log(`La casella clickata è la numero: ${i}`);
-    
-    //condizione sconfitta
-    if (bombsArray.includes(i)){
-        newDiv.classList.add('bomb');
-        setTimeout(function(){ 
-            defeatElement.classList.remove('hidden');
-            gridParent.innerHTML = '';
-            defeatCounter.innerHTML = clickCounterValue - 1; 
-        }, 500); 
-        playAgain.addEventListener('click', startGame());  
-    }
-
-    //condizione di vittoria
-    if (clickCounterValue == (gridParent.children.length - bombsArray.length)){
-        victoryElement.classList.remove('hidden');
-        gridParent.innerHTML = '';
-        victoryCounter.innerHTML = clickCounterValue;
-    }
-}
-
 //generara un nuovo div con classe box e classe basata sulla difficoltà
 function generateNewBox (difficultySelection){
     let item = document.createElement('div');
@@ -109,8 +83,34 @@ startButton.addEventListener('click', function(){
         newDiv.innerHTML = i;
         gridParent.append(newDiv);
 
-        //al click determino il valore della casella, vittoria e sconfitta
-        newDiv.addEventListener('click', coreMechanic());
+        //creo l'evento per il quale al click dell'elemento viene aggiunta la classe active e viene rimossa pointer
+        newDiv.addEventListener('click', function(){
+            //ad ogni click il contatore aumenta di uno
+            clickCounterValue += 1;
+            clickCounter.innerHTML = clickCounterValue;
+            newDiv.classList.add('active');
+            newDiv.classList.remove('pointer');
+            console.log(`La casella clickata è la numero: ${i}`);
+
+            //condizione di sconfitta
+            if (bombsArray.includes(i)){
+                newDiv.classList.add('bomb');
+                setTimeout(function(){ 
+                    defeatElement.classList.remove('hidden');
+                    gridParent.innerHTML = '';
+                    defeatCounter.innerHTML = clickCounterValue; 
+                    clickCounter.innerHTML = '';
+                }, 1000); 
+                defeatCounter.innerHTML = clickCounterValue; 
+            }
+
+            //condizione di vittoria
+            if (clickCounterValue == (gridParent.children.length - bombsArray.length)){
+                victoryElement.classList.remove('hidden');
+                gridParent.innerHTML = '';
+                victoryCounter.innerHTML = clickCounterValue;
+            }
+        })
     }
 })
 
