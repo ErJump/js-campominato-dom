@@ -16,6 +16,18 @@ function generateNewBox (difficultySelection){
     return item;
 }
 
+//ritorna un array di numeri randomici unici dati la lunghezza desiderata dell'array, un minimo e un massimo
+function getNewRandomBombsArray (bombsNumber, min, max){
+    let blackList = [];
+    console.log(blackList);
+    let arrayBombs = [];
+    for (let i = 0; i < bombsNumber; i++ ){
+        let newBomb = generateUniqueRandomNumber(blackList, min, max);
+        arrayBombs.push(newBomb);
+    }
+    return arrayBombs;
+}
+
 //controlla se il numero randomico generato è unico nell'array
 function generateUniqueRandomNumber (blackList, min, max){
     let newRandomNumber; 
@@ -42,10 +54,11 @@ function getRandomNumber (min , max){
 //creo l'evento per il quale si genera la griglia
 startButton.addEventListener('click', function(){
     const difficultyValue = difficulty.value
+    //inizializzo il numero di bombe
+    const newBombsNumber = 16;
 
-    let newBlackList = [];
-    console.log(generateUniqueRandomNumber(newBlackList, 1, difficultyValue));
-    
+    console.log(getNewRandomBombsArray(newBombsNumber, 1, difficultyValue));
+
     //aggiungo un reset per non generare box infiniti
     gridParent.innerHTML = '';
     //ciclo for per popolare la griglia con i nuovi box
