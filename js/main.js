@@ -3,6 +3,11 @@ const startButton = document.getElementById('start-button');
 const difficulty = document.getElementById('difficulty');
 const clickCounter = document.getElementById('click-counter');
 
+const victoryElement = document.getElementById('victory-element');
+const defeatElement = document.getElementById('defeat-element');
+const victoryCounter = document.getElementById('victory-counter');
+const defeatCounter = document.getElementById('defeat-counter');
+
 //generara un nuovo div con classe box e classe basata sulla difficoltà
 function generateNewBox (difficultySelection){
     let item = document.createElement('div');
@@ -58,9 +63,13 @@ startButton.addEventListener('click', function(){
     //aggiungo i reset
     gridParent.innerHTML = '';
     clickCounter.innerHTML = '';
+
+    //reset schermata di vittoria e sconfitta
+    victoryElement.classList.add('hidden');
+    defeatElement.classList.add('hidden');
+
     //inizializzo il contatore punteggio
     let clickCounterValue = 0;
-
     const difficultyValue = difficulty.value
     const newBombsNumber = 16;
 
@@ -82,10 +91,22 @@ startButton.addEventListener('click', function(){
             newDiv.classList.add('active');
             newDiv.classList.remove('pointer');
             console.log(`La casella clickata è la numero: ${i}`);
+
             //condizione di sconfitta
             if (bombsArray.includes(i)){
                 newDiv.classList.add('bomb');
                 clickCounterValue--;
+                defeatElement.classList.remove('hidden');
+                gridParent.innerHTML = '';
+                clickCounter.innerHTML = '';
+                defeatCounter.innerHTML = clickCounterValue; 
+            }
+
+            //condizione di vittoria
+            if (clickCounterValue == (gridParent.children.length - bombsArray.length)){
+                victoryElement.classList.remove('hidden');
+                gridParent.innerHTML = '';
+                victoryCounter.innerHTML = clickCounterValue;
             }
         })
     }
