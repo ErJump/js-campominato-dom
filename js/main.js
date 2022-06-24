@@ -1,7 +1,7 @@
 const gridParent = document.getElementById('grid-parent');
 const startButton = document.getElementById('start-button');
 const difficulty = document.getElementById('difficulty');
-//creo una funzione per generare un nuovo div con classe box
+//generara un nuovo div con classe box e classe basata sulla difficoltà
 function generateNewBox (difficultySelection){
     let item = document.createElement('div');
     item.classList.add('box' , 'pointer');
@@ -16,10 +16,17 @@ function generateNewBox (difficultySelection){
     return item;
 }
 
+//genera un numero randomico
+function getRandomNumber (min , max){
+    randomNumber = Math.floor(Math.random() * (max - min) + min);
+    return randomNumber;
+}
+
 //creo l'evento per il quale si genera la griglia
 startButton.addEventListener('click', function(){
     const difficultyValue = difficulty.value
-    console.log(difficultyValue);
+    
+    console.log(getRandomNumber(1, difficultyValue));
     //aggiungo un reset per non generare box infiniti
     gridParent.innerHTML = '';
     //ciclo for per popolare la griglia con i nuovi box
