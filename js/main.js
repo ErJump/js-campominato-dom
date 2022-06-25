@@ -90,25 +90,32 @@ startButton.addEventListener('click', function(){
         let newDiv = generateNewBox(difficultyValue);
         newDiv.innerHTML = i;
         gridParent.append(newDiv);
-
+        
         //creo l'evento per il quale al click dell'elemento viene aggiunta la classe active e viene rimossa pointer
         newDiv.addEventListener('click', function(){
+            //se la casella è stata già clickata allora il contatore rimuove 1 punto
+            if (newDiv.classList.contains('active')){
+                clickCounterValue--
+            }
             //ad ogni click il contatore aumenta di uno
             clickCounterValue += 1;
             clickCounter.innerHTML = clickCounterValue;
             newDiv.classList.add('active');
             newDiv.classList.remove('pointer');
             console.log(`La casella clickata è la numero: ${i}`);
-
+            
+            
             //condizione di sconfitta
             if (isBomb(i, bombsArray)){
                 newDiv.classList.add('bomb');
+                checkValue = true;
                 setTimeout(function(){ 
                     defeatElement.classList.remove('hidden');
+                    i = 200;
                     gridParent.innerHTML = '';
                     defeatCounter.innerHTML = clickCounterValue - 1; 
                     clickCounter.innerHTML = '';
-                }, 500); 
+                }, 200); 
             }
 
             //condizione di vittoria
