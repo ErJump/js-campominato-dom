@@ -8,6 +8,8 @@ const defeatElement = document.getElementById('defeat-element');
 const victoryCounter = document.getElementById('victory-counter');
 const defeatCounter = document.getElementById('defeat-counter');
 
+let isGameOver = false;
+
 //generara un nuovo div con classe box e classe basata sulla difficoltà
 function generateNewBox (difficultySelection){
     let item = document.createElement('div');
@@ -75,6 +77,7 @@ startButton.addEventListener('click', function(){
     //reset schermata di vittoria e sconfitta
     victoryElement.classList.add('hidden');
     defeatElement.classList.add('hidden');
+    isGameOver = false;
 
     //inizializzo il contatore punteggio
     let clickCounterValue = 0;
@@ -93,36 +96,38 @@ startButton.addEventListener('click', function(){
         
         //creo l'evento per il quale al click dell'elemento viene aggiunta la classe active e viene rimossa pointer
         newDiv.addEventListener('click', function(){
-            //se la casella è stata già clickata allora il contatore rimuove 1 punto
-            if (newDiv.classList.contains('active')){
-                clickCounterValue--
-            }
-            //ad ogni click il contatore aumenta di uno
-            clickCounterValue += 1;
-            clickCounter.innerHTML = clickCounterValue;
-            newDiv.classList.add('active');
-            newDiv.classList.remove('pointer');
-            console.log(`La casella clickata è la numero: ${i}`);
-            
-            
-            //condizione di sconfitta
-            if (isBomb(i, bombsArray)){
-                newDiv.classList.add('bomb');
-                checkValue = true;
-                setTimeout(function(){ 
-                    defeatElement.classList.remove('hidden');
-                    i = 200;
+            if (isGameOver === false){
+                //se la casella è stata già clickata allora il contatore rimuove 1 punto
+                if (newDiv.classList.contains('active')){
+                    clickCounterValue--
+                }
+                //ad ogni click il contatore aumenta di uno
+                clickCounterValue += 1;
+                clickCounter.innerHTML = clickCounterValue;
+                newDiv.classList.add('active');
+                newDiv.classList.remove('pointer');
+                console.log(`La casella clickata è la numero: ${i}`);
+                
+                
+                //condizione di sconfitta
+                if (isBomb(i, bombsArray)){
+                    newDiv.classList.add('bomb');
+                    isGameOver = true;
+                    setTimeout(function(){ 
+                        defeatElement.classList.remove('hidden');
+                        i = 200;
+                        gridParent.innerHTML = '';
+                        defeatCounter.innerHTML = clickCounterValue - 1; 
+                        clickCounter.innerHTML = '';
+                    }, 2000); 
+                }
+    
+                //condizione di vittoria
+                if (clickCounterValue == (gridParent.children.length - bombsArray.length)){
+                    victoryElement.classList.remove('hidden');
                     gridParent.innerHTML = '';
-                    defeatCounter.innerHTML = clickCounterValue - 1; 
-                    clickCounter.innerHTML = '';
-                }, 200); 
-            }
-
-            //condizione di vittoria
-            if (clickCounterValue == (gridParent.children.length - bombsArray.length)){
-                victoryElement.classList.remove('hidden');
-                gridParent.innerHTML = '';
-                victoryCounter.innerHTML = clickCounterValue;
+                    victoryCounter.innerHTML = clickCounterValue;
+                }
             }
         })
     }
